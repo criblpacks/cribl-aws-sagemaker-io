@@ -1,0 +1,35 @@
+iam_role_arn:
+  type: string
+  value: '"arn:aws:iam::821601040136:role/CriblSageMakerLogsReader"'
+  description: "REQUIRED: IAM role ARN for Cribl to assume"
+  lib: custom
+sagemaker_cloudtrail_sqs_queue:
+  type: string
+  value: '"nth-sagemaker-cloudtrail-notifications"'
+  description: "REQUIRED: SQS queue URL for cloudtrail notifications"
+  tags: ""
+  lib: custom
+sagemaker_invocation_sqs_queue:
+  type: string
+  value: '"nth-sagemaker-invocation-notifications"'
+  description: "REQUIRED: SQS queue URL for invocation notifications"
+  tags: ""
+  lib: custom
+aws_region:
+  type: string
+  lib: custom
+  description: "REQUIRED: AWS region where SageMaker is hosted"
+  value: '"us-east-1"'
+  tags: ""
+default_splunk_index:
+  type: string
+  value: '"aws"'
+  lib: custom
+default_sagemaker_cloudtrail_sourcetype:
+  type: string
+  value: '"aws:sagemaker:cloudtrail"'
+  lib: custom
+default_sagemaker_invocation_sourcetype:
+  type: string
+  value: '"aws:sagemaker:invocation"'
+  lib: custom

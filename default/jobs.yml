@@ -1,0 +1,91 @@
+sagemaker_cloudtrail_test:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: false
+  schedule: {}
+  streamtags: []
+  workerAffinity: false
+  collector:
+    conf:
+      parquetChunkSizeMB: 5
+      parquetChunkDownloadTimeout: 600
+      partitioningScheme: none
+      awsAuthenticationMethod: auto
+      signatureVersion: v4
+      enableAssumeRole: true
+      durationSeconds: 3600
+      maxBatchSize: 10
+      recurse: true
+      reuseConnections: true
+      rejectUnauthorized: true
+      verifyPermissions: true
+      disableTimeFilter: false
+      bucket: '"nth-sagemaker-cloudtrail-logs"'
+      path: '"AWSLogs/821601040136/CloudTrail/us-east-1/2026/01/06/"'
+      region: us-east-1
+      assumeRoleArn: arn:aws:iam::821601040136:role/CriblSageMakerLogsReader
+    destructive: false
+    encoding: utf8
+    type: s3
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: true
+    preprocess:
+      disabled: true
+    throttleRatePerSec: "0"
+    metadata:
+      - name: __packsource
+        value: "'cribl-aws-sagemaker-io.cloudtrail'"
+    breakerRulesets:
+      - AWS Ruleset
+  savedState: {}
+  notifications: []
+sagemaker_invocation_test:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: false
+  schedule: {}
+  streamtags: []
+  workerAffinity: false
+  collector:
+    conf:
+      parquetChunkSizeMB: 5
+      parquetChunkDownloadTimeout: 600
+      partitioningScheme: none
+      awsAuthenticationMethod: auto
+      signatureVersion: v4
+      enableAssumeRole: true
+      durationSeconds: 3600
+      maxBatchSize: 10
+      recurse: true
+      reuseConnections: true
+      rejectUnauthorized: true
+      verifyPermissions: true
+      disableTimeFilter: true
+      bucket: '"nth-sagemaker-invocation-logs"'
+      path: '"jumpstart-dft-llama-3-2-1b-instruct-20260107-211937/AllTraffic/2026/01/07/22/"'
+      region: us-east-1
+      assumeRoleArn: arn:aws:iam::821601040136:role/CriblSageMakerLogsReader
+      extractors: []
+    destructive: false
+    encoding: utf8
+    type: s3
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: true
+    preprocess:
+      disabled: true
+    throttleRatePerSec: "0"
+    metadata:
+      - name: __packsource
+        value: "'cribl-aws-sagemaker-io.invocation'"
+    breakerRulesets:
+      - AWS Ruleset
+  savedState: {}
+  notifications: []

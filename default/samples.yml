@@ -1,0 +1,10 @@
+VbBZDL:
+  sampleName: aws_sagemaker_cloudtrail.log
+  created: 1767916702651
+  size: 12173
+  numEvents: 8
+g8mZzx:
+  sampleName: aws_sagemaker_invocation.log
+  created: 1767916899481
+  size: 4629
+  numEvents: 4
