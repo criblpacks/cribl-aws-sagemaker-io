@@ -1,17 +1,17 @@
 iam_role_arn:
   type: string
-  value: '"arn:aws:iam::821601040136:role/CriblSageMakerLogsReader"'
+  value: '"YOUR_SAGEMAKER_ARN"'
   description: "REQUIRED: IAM role ARN for Cribl to assume"
   lib: custom
 sagemaker_cloudtrail_sqs_queue:
   type: string
-  value: '"nth-sagemaker-cloudtrail-notifications"'
+  value: '"YOUR_SAGEMAKER_CLOUDTRAIL_SQS_QUEUE"'
   description: "REQUIRED: SQS queue URL for cloudtrail notifications"
   tags: ""
   lib: custom
 sagemaker_invocation_sqs_queue:
   type: string
-  value: '"nth-sagemaker-invocation-notifications"'
+  value: '"YOUR_SAGEMAKER_INVOCATION_SQS_QUEUE"'
   description: "REQUIRED: SQS queue URL for invocation notifications"
   tags: ""
   lib: custom
