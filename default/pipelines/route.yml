@@ -1,0 +1,43 @@
+id: default
+groups: {}
+comments:
+  - id: Ztx5OT
+    comment: Matches JSON events coming from the AWS Bedrock Collectors
+    index: 0
+  - id: EkqgfV
+    comment: Something went wrong. We shouldn't be here
+    index: 3
+routes:
+  - id: HTiMSa
+    name: cribl_aws_sagemaker_cloudtrail
+    final: true
+    disabled: false
+    pipeline: cribl_aws_sagemaker_cloudtrail
+    description: Process AWS SageMaker Cloudtrail Data
+    enableOutputExpression: false
+    outputExpression: null
+    filter: __packsource.includes('cribl-aws-sagemaker-io.cloudtrail')
+    clones: []
+    output: out_ian_lake
+  - id: HTiMda
+    name: cribl_aws_sagemaker_invocation
+    final: true
+    disabled: false
+    pipeline: cribl_aws_sagemaker_invocation
+    description: Process AWS SageMaker Invocation Data
+    enableOutputExpression: false
+    outputExpression: null
+    filter: __packsource.includes('cribl-aws-sagemaker-io.invocation')
+    clones: []
+    output: out_ian_lake
+  - id: default
+    name: default
+    final: true
+    disabled: false
+    pipeline: main
+    description: ""
+    enableOutputExpression: false
+    outputExpression: null
+    filter: "true"
+    clones: []
+    output: default

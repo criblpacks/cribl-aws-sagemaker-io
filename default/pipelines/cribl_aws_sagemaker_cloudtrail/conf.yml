@@ -1,0 +1,123 @@
+output: default
+streamtags: []
+groups:
+  SbRroP:
+    name: Initial Parsing and Timestamping
+    description: Parses the JSON object so that we can start working with the
+      fields, sets _time to the correct value
+    index: 3
+  KsiiV5:
+    name: Outputs
+    description: Select the output required, if nothing enabled standard JSON will be sent
+    index: 4
+    disabled: false
+asyncFuncTimeout: 1000
+functions:
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: >-
+        This conditioning pipeline is used to process AWS SageMaker data. The Pack
+        will normalize the JSON data from the collector and provide optional
+        reduction techniques. 
+
+
+        There are two current available output formats for the data: 
+            1. Standard JSON that is formatted and timestamp normalized. 
+            3. Splunk, Index and sourcetype can be changed within the pipeline, however default values are set in Knowledge > Variables
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: For additional details, see this pack's README under Settings.
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: "Author: Cribl Packs Team"
+  - id: serde
+    filter: "true"
+    disabled: false
+    conf:
+      mode: extract
+      type: json
+      srcField: _raw
+      fieldFilterExpr: value !== '' && value !== null
+      remove: []
+      keep: []
+    description: Parse the JSON from _raw
+    groupId: SbRroP
+  - id: drop
+    filter: eventCategory == 'Management' && eventSource != 'sagemaker.amazonaws.com'
+    disabled: null
+    conf: {}
+    groupId: SbRroP
+    final: true
+    description: Drop non-SageMaker management events, keep all Data events
+  - id: eval
+    filter: "true"
+    disabled: false
+    conf:
+      remove:
+        - _raw
+    description: Remove intermediate fields
+    groupId: SbRroP
+  - id: auto_timestamp
+    filter: "true"
+    disabled: null
+    conf:
+      srcField: timestamp
+      dstField: _time
+      defaultTimezone: UTC
+      timeExpression: time.getTime() / 1000
+      offset: 0
+      maxLen: 150
+      defaultTime: now
+      latestDateAllowed: +1week
+      earliestDateAllowed: -420weeks
+    groupId: SbRroP
+  - id: comment
+    filter: "true"
+    disabled: false
+    conf:
+      comment: Output to Splunk
+    groupId: KsiiV5
+  - id: serialize
+    filter: "true"
+    disabled: false
+    conf:
+      type: json
+      dstField: _raw
+      fields:
+        - "!_*"
+        - "!cribl*"
+        - "!source"
+        - "!host"
+        - "*"
+    groupId: KsiiV5
+    description: Serialize JSON to _raw
+  - id: eval
+    filter: "true"
+    disabled: false
+    conf:
+      add:
+        - disabled: false
+          value: "index ? index : C.vars['default_splunk_index']"
+          name: index
+        - disabled: false
+          value: "sourcetype ? sourcetype :
+            C.vars['default_sagemaker_cloudtrail_sourcetype']"
+          name: sourcetype
+      keep:
+        - _*
+        - cribl*
+        - source
+        - host
+        - index
+        - sourcetype
+      remove:
+        - "*"
+    groupId: KsiiV5
+    description: Sets the index and sourcetype for Splunk output
+description: Pipeline for parsing, formatting and filtering Duo Rest API events.
