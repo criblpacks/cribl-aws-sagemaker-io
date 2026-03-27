@@ -18,7 +18,8 @@ routes:
     outputExpression: null
     filter: __packsource.includes('cribl-aws-sagemaker-io.cloudtrail')
     clones: []
-    output: out_ian_lake
+    targetContext: group
+    output: __group
   - id: HTiMda
     name: cribl_aws_sagemaker_invocation
     final: true
@@ -29,7 +30,8 @@ routes:
     outputExpression: null
     filter: __packsource.includes('cribl-aws-sagemaker-io.invocation')
     clones: []
-    output: out_ian_lake
+    targetContext: group
+    output: __group
   - id: default
     name: default
     final: true
