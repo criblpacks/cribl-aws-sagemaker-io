@@ -2,7 +2,10 @@
 ----
 
 ## About this Pack
-This pack is built as a complete SOURCE + DESTINATION solution (identified by the IO suffix). Data collection and delivery happen entirely within the pack's context, eliminating the need to connect it to globally defined Sources and Destinations.
+This pack is built as a complete SOURCE + DESTINATION solution (identified by the IO suffix). Data collection and delivery happen entirely within the Pack's context - you can choose how data arrives at a DESTINATION:
+*  *Send to Worker Group Routes* (the default): data is sent to the top-level Worker Group Routes.
+*  *Default Destination*: data is sent to the Worker Group's [Default Destination](https://docs.cribl.io/stream/destinations-default/). 
+*  *In-Pack Destination*: data is sent to one or more Destinations configured within the Pack.
 
 This Pack enables comprehensive ingestion, processing, and routing of AWS SageMaker telemetry into Cribl Stream for normalization, enrichment, and delivery to downstream destinations such as Amazon S3 or Splunk.
 It captures two complementary data sources for full visibility into SageMaker usage and security:
@@ -30,6 +33,9 @@ This Pack provides the following benefits:
 * **Cost Attribution**: Correlate invocations with endpoints for chargeback
 
 ## Deployment
+* Every bundled Source within this pack adds a hidden field: `__packsource`. This field allows for simplified routing based on the Pack source.
+* This pack is configured by default to use the Destination *Send to Worker Group Routes*. You *must* add either a Worker Group Route or rely on the Default Destination.
+* To explicitly use the Worker Group's *Default Destination*, change the Pack's Routes to *default:default*. The Pack will then route the data to the destination currently set as the Default on the Worker Group.
 
 This section describes all required steps to deploy this Pack, including AWS-side setup and Cribl configuration.
 
@@ -635,6 +641,9 @@ The Pack has the following variables:
 Upgrading certain Cribl Packs using the same Pack ID can have unintended consequences. See [Upgrading an Existing Pack](https://docs.cribl.io/stream/packs#upgrading) for details.
 
 ## Release Notes
+
+### Version 1.0.1
+* Updated Route Destinations to "Send to Worker Group Routes". See above for details.
 
 ### Version 1.0.0
 
